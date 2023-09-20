@@ -1,4 +1,4 @@
-export default function InterestGroups() {
+export default function interestGroups() {
     return (
         <div>
             <h1>Interest Groups</h1>

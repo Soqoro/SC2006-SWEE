@@ -1,4 +1,4 @@
-export default function Friends() {
+export default function friends() {
     return (
         <div>
             <h1>Friends</h1>

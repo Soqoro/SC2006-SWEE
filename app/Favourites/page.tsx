@@ -1,4 +1,4 @@
-export default function Favourites() {
+export default function favourites() {
     return (
         <div>
             <h1>Favourites</h1>

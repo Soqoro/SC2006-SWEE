@@ -8,7 +8,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 
-export default function Home() {
+export default function home() {
     return (
         <div className="flex text-center">
             <Dialog>
