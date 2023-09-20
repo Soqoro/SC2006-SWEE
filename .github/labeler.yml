@@ -1,0 +1,23 @@
+"area: authentication":
+  - app/authentication/**
+  - api/authentication/**
+
+"area: favourites":
+  - app/favourites/**
+  - api/favourites/**
+
+"area: friends":
+  - app/friends/**
+  - api/friends/**
+
+"area: books":
+  - app/
+  - api/
+
+"area: interest groups":
+  - app/interest-groups
+  - api/interest-groups
+
+"area: recommendation":
+  - app/recommender
+  - api/recommender
