@@ -10,7 +10,7 @@ import {
 
 export default function home() {
     return (
-        <div className="flex text-center">
+        <div>
             <Dialog>
                 <DialogTrigger>Open</DialogTrigger>
                 <DialogContent>
