@@ -12,6 +12,24 @@ import {
 import Image from "next/image";
 
 export default function home() {
+    const TrendingBooks = [
+        {
+            title: "The Great Gatsby",
+        },
+        {
+            title: "Book2",
+        },
+    ];
+
+    const MysteryBooks = [
+        {
+            title: "Book1",
+        },
+        {
+            title: "Book2",
+        },
+    ];
+
     return (
         <div className="w-full p-10">
             <div className="flex flex-row items-center justify-between pl-5 pr-5">
@@ -63,6 +81,10 @@ export default function home() {
                     </button>
                 </div>
             </div>
+
+            <div className="text-xl mt-5 mb-5">Trending</div>
+
+            <div className="text-xl mt-5 mb-5">Mystery</div>
         </div>
     );
 }

@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import {
     PanelTop,
@@ -25,9 +26,7 @@ const generalLinks = [{ href: "/settings", label: "Settings" }];
 export default function SideBar() {
     return (
         <div className="flex flex-col border-r-2 h-screen pr-32 pl-8 pt-10">
-            <div className="text-xl">
-                <strong>CoverQuest.</strong>
-            </div>
+            <div className="text-xl font-bold">CoverQuest.</div>
             <br />
             <br />
             <div className="mb-6">Menu</div>
