@@ -9,6 +9,7 @@ import {
     Bell,
     MessageSquare,
 } from "lucide-react";
+import Image from "next/image";
 
 export default function home() {
     return (
@@ -38,7 +39,30 @@ export default function home() {
                 </div>
             </div>
 
-            <div></div>
+            <div className="relative h-64 shadow-lg overflow-hidden mt-5 rounded-xl border-2">
+                <Image
+                    src="/banner.jpg"
+                    alt="Banner Background"
+                    width={1920}
+                    height={1080}
+                    className="absolute h-full w-full object-cover"
+                />
+                <Image
+                    src="/bannerBooks.png"
+                    alt="Banner Books"
+                    width={400}
+                    height={400}
+                    className="absolute right-0 top-[-30%]"
+                />
+                <div className="absolute bottom-0 p-4 w-full">
+                    <h1 className="text-white text-2xl font-bold">
+                        Exciting Summer Reads Now Available!
+                    </h1>
+                    <button className="text-white mt-2 underline">
+                        View More
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }
