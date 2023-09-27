@@ -10,6 +10,15 @@ import {
     LogIn,
 } from "lucide-react";
 
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
+
 const menuLinks = [
     { href: "/", label: "Browse" },
     { href: "/favourites", label: "Favourites" },
@@ -65,10 +74,48 @@ export default function SideBar() {
                     {label}
                 </Link>
             ))}
-            <div className="flex flex-row">
-                <LogIn className="pr-1" />
-                Login
-            </div>
+            <Dialog>
+                <DialogTrigger className="flex flex-row">
+                    <LogIn className="pr-1" />
+                    Login
+                </DialogTrigger>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>
+                            <div>WELCOME BACK!</div>
+                            <div>
+                                Don&apos;t have a account,{" "}
+                                <button className="mt-2">Sign up</button>
+                            </div>
+                        </DialogTitle>
+                        <DialogDescription>
+                            <div className="w-full flex flex-col">
+                                <div>
+                                    Username
+                                    <input
+                                        type="text"
+                                        placeholder="daniel123"
+                                        className="border-2 border-black rounded-xl p-2 w-full focus:outline-none"
+                                    />
+                                </div>
+                                <div>
+                                    Password
+                                    <input
+                                        type="password"
+                                        placeholder="********"
+                                        className="border-2 border-black rounded-xl p-2 w-full focus:outline-none"
+                                    />
+                                </div>
+                                <div className="flex flex-row justify-start">
+                                    <div>Remember me</div>
+                                    <div>Forget Password?</div>
+                                </div>
+                                <button>Sign In</button>
+                            </div>
+                        </DialogDescription>
+                    </DialogHeader>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }
