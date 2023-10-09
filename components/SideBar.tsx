@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import {
     PanelTop,
     Heart,
@@ -9,7 +10,6 @@ import {
     Settings,
     LogIn,
 } from "lucide-react";
-
 import {
     Dialog,
     DialogContent,
@@ -18,6 +18,12 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import { Button, buttonVariants } from "@/components/ui/button";
+import Google from "./icons/Google";
+import Meta from "./icons/Meta";
+import Apple from "./icons/Apple";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 const menuLinks = [
     { href: "/", label: "Browse" },
@@ -79,17 +85,24 @@ export default function SideBar() {
                     <LogIn className="pr-1" />
                     Login
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent className="bg-white max-w-3xl">
                     <DialogHeader>
                         <DialogTitle>
-                            <div>WELCOME BACK!</div>
-                            <div>
+                            <div className="text-xl font-bold">
+                                WELCOME BACK!
+                            </div>
+                            <div className="text-sm font-normal">
                                 Don&apos;t have a account,{" "}
-                                <button className="mt-2">Sign up</button>
+                                <Button
+                                    className="p-0 text-sm font-normal text-indigo-500"
+                                    variant="link"
+                                >
+                                    Sign up
+                                </Button>
                             </div>
                         </DialogTitle>
-                        <DialogDescription>
-                            <div className="w-full flex flex-col">
+                        <DialogDescription className="flex flex-row items">
+                            <div className="w-full flex flex-col justify-between">
                                 <div>
                                     Username
                                     <input
@@ -106,12 +119,64 @@ export default function SideBar() {
                                         className="border-2 border-black rounded-xl p-2 w-full focus:outline-none"
                                     />
                                 </div>
-                                <div className="flex flex-row justify-start">
-                                    <div>Remember me</div>
-                                    <div>Forget Password?</div>
+                                <div className="flex flex-row justify-between items-center">
+                                    <div className="flex items-center space-x-2">
+                                        <Checkbox
+                                            id="terms"
+                                            className="rounded-xl"
+                                        />
+                                        <label
+                                            htmlFor="terms"
+                                            className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        >
+                                            Remember Me
+                                        </label>
+                                    </div>
+                                    <Button
+                                        className="p-0 text-sm font-normal m-0 text-indigo-400"
+                                        variant="link"
+                                    >
+                                        Forget Password?
+                                    </Button>
                                 </div>
-                                <button>Sign In</button>
+                                <Button className="mt-2 bg-indigo-500 hover:bg-indigo-700 text-white rounded-2xl">
+                                    Sign In
+                                </Button>
+                                <div className="flex flex-row items-center w-full">
+                                    <div className="flex-grow border-b my-4"></div>
+                                    <span className="mx-2 text-xs">
+                                        or Continue With
+                                    </span>
+                                    <div className="flex-grow border-b my-4"></div>
+                                </div>
+                                <div className="flex flex-row justify-between">
+                                    <Button
+                                        className="rounded-xl p-4"
+                                        variant="outline"
+                                    >
+                                        <Google />
+                                    </Button>
+                                    <Button
+                                        className="rounded-xl p-4"
+                                        variant="outline"
+                                    >
+                                        <Meta />
+                                    </Button>
+                                    <Button
+                                        className="rounded-xl p-4"
+                                        variant="outline"
+                                    >
+                                        <Apple />
+                                    </Button>
+                                </div>
                             </div>
+
+                            <Image
+                                src="/LoginBanner.png"
+                                alt="Login Banner Background"
+                                width={500}
+                                height={500}
+                            />
                         </DialogDescription>
                     </DialogHeader>
                 </DialogContent>

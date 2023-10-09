@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import {
     ChevronLeft,
     ChevronRight,
@@ -10,7 +9,7 @@ import {
     MessageSquare,
 } from "lucide-react";
 import Image from "next/image";
-
+import { Separator } from "@/components/ui/separator";
 export default function home() {
     const TrendingBooks = [
         {
@@ -82,7 +81,10 @@ export default function home() {
                 </div>
             </div>
 
-            <div className="text-xl mt-5 mb-5">Trending</div>
+            <div className="text-xl mt-5 mb-5">
+                Trending
+                <Separator className="border-2" />
+            </div>
 
             <div className="text-xl mt-5 mb-5">Mystery</div>
         </div>
