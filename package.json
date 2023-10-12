@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "prettier --check . && stylelint --allow-empty-input \\\"**/*.{css,scss}\\\" && next lint",
+    "style": "stylelint --allow-empty-input \"**/*.css\"",
+    "lint": "prettier --check . && stylelint --allow-empty-input \"**/*.css\" && next lint",
     "fix": "prettier --write . && next lint --fix"
   },
   "dependencies": {
