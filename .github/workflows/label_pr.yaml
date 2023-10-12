@@ -1,4 +1,4 @@
-name: "Label Pull Request"
+name: Label Pull Request
 on:
   - pull_request_target
 
@@ -11,4 +11,4 @@ jobs:
     steps:
       - uses: actions/labeler@v4
         with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'
