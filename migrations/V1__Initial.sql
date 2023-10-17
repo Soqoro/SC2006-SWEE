@@ -53,7 +53,7 @@ CREATE TABLE user_group (
 
 CREATE TABLE user_group_user_profile (
     PRIMARY KEY (group_id, user_id),
-    group_id text REFERENCES user_group(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL,
+    group_id uuid REFERENCES user_group(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL,
     user_id text REFERENCES user_profile(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL,
 
     permissions text[] DEFAULT '{}' NOT NULL -- This should be a separate table if it's actual production code but KISS.
@@ -61,8 +61,8 @@ CREATE TABLE user_group_user_profile (
 
 CREATE TABLE user_group_discussion (
     PRIMARY KEY (group_id, discussion_id),
-    group_id text REFERENCES user_group(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL,
-    discussion_id UUID NOT NULL,
+    group_id uuid REFERENCES user_group(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL,
+    discussion_id uuid NOT NULL,
 
     name text NOT NULL,
     creator_id text REFERENCES user_profile(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL
@@ -70,8 +70,8 @@ CREATE TABLE user_group_discussion (
 
 CREATE TABLE user_group_discussion_comment (
     PRIMARY KEY (discussion_id, comment_id),
-    discussion_id UUID REFERENCES user_group_discussion(discussion_id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL,
-    comment_id UUID NOT NULL,
+    discussion_id uuid REFERENCES user_group_discussion(discussion_id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL,
+    comment_id uuid NOT NULL,
 
     name text NOT NULL,
     creator_id text REFERENCES user_profile(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL
@@ -79,6 +79,6 @@ CREATE TABLE user_group_discussion_comment (
 
 CREATE TABLE user_group_discussion_comment_like (
     PRIMARY KEY (comment_id, liker_id),
-    comment_id UUID REFERENCES user_group_discussion_comment(comment_id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL,
+    comment_id uuid REFERENCES user_group_discussion_comment(comment_id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL,
     liker_id text REFERENCES user_profile(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL
 );
