@@ -10,9 +10,7 @@
       "lockFileMaintenance": {
         "enabled": false
       },
-      "matchPackagePatterns": [
-        "*"
-      ],
+      "matchPackagePatterns": ["*"],
       "matchUpdateTypes": ["major", "minor", "patch", "pin", "digest"],
       "automerge": true
     }

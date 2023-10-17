@@ -36,11 +36,13 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 Firstly, install [Docker Desktop](https://docs.docker.com/desktop/).
 
 Next, run the following command in this project's root directory:
+
 ```shell
 docker-compose -p swee -f postgres-docker.yaml up -d
 ```
 
 To stop the database, run the following command in this project's root directory:
+
 ```shell
 docker-compose -p swee stop
 ```
