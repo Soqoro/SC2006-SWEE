@@ -9,7 +9,7 @@ on:
   workflow_dispatch: {}
 
 env:
-  FLYWAY_HUB_ACCESS_TOKEN: ${{ secrets.FLYWAY_HUB_ACCESS_TOKEN }}
+  FLYWAYHUB_ACCESS_TOKEN: ${{ secrets.FLYWAY_HUB_ACCESS_TOKEN }}
 
 jobs:
   test:
