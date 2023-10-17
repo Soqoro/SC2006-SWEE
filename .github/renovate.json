@@ -6,7 +6,11 @@
   "packageRules": [
     {
       "groupName": "Dependencies",
-      "matchPaths": ["./**"],
+      "groupSlug": "all",
+      "lockFileMaintenance": {
+        "enabled": false
+      },
+      "matchPackagePatterns": ["*"],
       "matchUpdateTypes": ["major", "minor", "patch", "pin", "digest"],
       "automerge": true
     }
