@@ -1,0 +1,26 @@
+name: Test Database Migration
+
+on:
+  push:
+    paths:
+      - '.github/postgres_test.yaml'
+      - 'migrations/**'
+
+  workflow_dispatch: {}
+
+env:
+  FLYWAY_HUB_ACCESS_TOKEN: ${{ secrets.FLYWAY_HUB_ACCESS_TOKEN }}
+
+jobs:
+  test:
+    name: Test Flyway migration
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout/@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
+      - name: Test migrations on Flyway Hub
+        uses: red-gate/flyway-hub-migration-test@v4
+        with:
+          projectName: sc2006-swee
+          engine: postgres-13
+          migrationDirs: migrations
