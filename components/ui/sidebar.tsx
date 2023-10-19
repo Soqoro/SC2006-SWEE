@@ -85,7 +85,7 @@ export default function Sidebar() {
               <DialogTitle>
                 <div className='text-xl font-bold'>WELCOME BACK!</div>
                 <div className='text-sm font-normal'>
-                  Don&apos;t have a account,{' '}
+                  Don&apos;t have a account?{' '}
                   <Button
                     className='p-0 text-sm font-normal text-indigo-500'
                     variant='link'
