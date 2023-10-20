@@ -1,10 +1,7 @@
 name: CoverQuest Presubmit
 
 on:
-  pull_request:
-    branches:
-      - main
-
+  pull_request: {}
   workflow_dispatch: {}
 
 jobs:
