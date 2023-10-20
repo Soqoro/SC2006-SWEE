@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   ChevronLeft,
   ChevronRight,
@@ -7,9 +7,9 @@ import {
   ListFilter,
   Bell,
   MessageSquare,
-} from 'lucide-react';
-import Image from 'next/image';
-import { Separator } from '@/components/ui/separator';
+} from "lucide-react";
+import Image from "next/image";
+import { Separator } from "@/components/ui/separator";
 export default function home() {
   return (
     <div className='w-full p-10'>

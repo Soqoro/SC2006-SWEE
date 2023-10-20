@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   flyway:
     image: flyway/flyway:latest
@@ -13,7 +13,7 @@ services:
     image: postgres:latest
     restart: always
     ports:
-      - '5432:5432'
+      - "5432:5432"
     environment:
       - POSTGRES_USER=local-username
       - POSTGRES_PASSWORD=password

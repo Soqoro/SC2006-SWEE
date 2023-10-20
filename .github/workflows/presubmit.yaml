@@ -20,17 +20,19 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 'latest'
-      - name: Install dependencies
-        run: npm install
-      - name: Fix linting issues
-        run: npm run fix
-      - name: Lint
-        run: npm run lint
-      - name: Build with Next.js
-        run: npm run build
-
-      - name: Commit fixes
-        uses: EndBug/add-and-commit@v9
+          node-version: "latest"
+      - run: |
+        touch .env
+        echo GOOGLE_CLIENT_ID = ${{ secrets.GOOGLE_CLIENT_ID }} >> .env
+        echo GOOGLE_CLIENT_SECRET = ${{ secrets.GOOGLE_CLIENT_SECRET }} >> .env
+        echo NLB_API_KEY = ${{ secrets.NLB_API_KEY }} >> .env
+        echo NLB_APP_CODE = ${{ secrets.NLB_APP_CODE }} >> .env
+        echo DATABASE_URL = ${{ secrets.DATABASE_URL }} >> .env
+        cat .env
+      - run: npm install
+      - run: npm run fix
+      - run: npm run test
+      - run: npm run build
+      - uses: EndBug/add-and-commit@v9
         with:
-          add: '*'
+          add: "*"

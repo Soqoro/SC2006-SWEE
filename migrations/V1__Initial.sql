@@ -1,8 +1,9 @@
 CREATE TABLE user_profile (
     id text NOT NULL PRIMARY KEY,
+    name text NOT NULL,
 
-    favorite_book_isbns text[] DEFAULT '{}' NOT NULL,
-    recent_book_isbns text[] DEFAULT '{}' NOT NULL
+    favorite_book_brns text[] DEFAULT '{}' NOT NULL,
+    recent_book_brns text[] DEFAULT '{}' NOT NULL
 );
 
 
@@ -18,9 +19,9 @@ CREATE TABLE user_profile_user_profile (
 
 
 CREATE TABLE book_rating (
-    PRIMARY KEY (user_id, isbn),
+    PRIMARY KEY (user_id, brn),
     user_id text REFERENCES user_profile(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL,
-    isbn text NOT NULL,
+    brn text NOT NULL,
 
     rating double precision,
 
@@ -31,14 +32,12 @@ CREATE TABLE book_rating (
 CREATE TABLE book_comment (
     id uuid PRIMARY KEY NOT NULL,
     user_id text REFERENCES user_profile(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL,
+    brn text NOT NULL,
 
-    isbn text NOT NULL,
     content text NOT NULL,
 
     created_at timestamp NOT NULL
 );
-
-CREATE INDEX book_rating_isbn ON book_rating(isbn);
 
 
 CREATE TABLE user_group (
