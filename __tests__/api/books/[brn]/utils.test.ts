@@ -3,8 +3,9 @@ import {
   nlb,
   NLBBook,
   openLibrary,
-  OpenLibraryBook, userBookInformation,
-} from "@/app/api/books/[brn]/route";
+  OpenLibraryBook,
+  userBookInformation,
+} from "@/app/api/books/[brn]/utils";
 import { TestDatabase } from "@/__tests__/api/database";
 
 describe("nlb", () => {
@@ -78,20 +79,31 @@ describe("user book information", () => {
   test("book not favorited", async () => {
     await database.client`UPDATE user_profile SET favorite_book_brns = '{"024145414X"}' WHERE id = 'A'`;
 
-    const information = await userBookInformation(database.client, "9780980200447", TestDatabase.userA.id);
+    const information = await userBookInformation(
+      database.client,
+      "9780980200447",
+      TestDatabase.userA.id,
+    );
     expect(information.favorite).toEqual(false);
   });
 
   test("book favorited", async () => {
     await database.client`UPDATE user_profile SET favorite_book_brns = '{"9780980200447"}' WHERE id = 'A'`;
 
-    const information = await userBookInformation(database.client, "9780980200447", TestDatabase.userA.id);
+    const information = await userBookInformation(
+      database.client,
+      "9780980200447",
+      TestDatabase.userA.id,
+    );
     expect(information.favorite).toEqual(true);
   });
 
-
   test("has no aggregated rating", async () => {
-    const information = await userBookInformation(database.client, "9780980200447", TestDatabase.userA.id);
+    const information = await userBookInformation(
+      database.client,
+      "9780980200447",
+      TestDatabase.userA.id,
+    );
     expect(information.aggregatedRating).toEqual(0);
   });
 
@@ -101,13 +113,20 @@ describe("user book information", () => {
         VALUES ('A', '9780980200447', 1, '2023-10-20 12:30:00'), ('B', '9780980200447', 5, '2023-10-20 12:30:00')
     `;
 
-    const information = await userBookInformation(database.client, "9780980200447", TestDatabase.userA.id);
+    const information = await userBookInformation(
+      database.client,
+      "9780980200447",
+      TestDatabase.userA.id,
+    );
     expect(information.aggregatedRating).toEqual(3);
   });
 
-
   test("has no rating", async () => {
-    const information = await userBookInformation(database.client, "9780980200447", TestDatabase.userA.id);
+    const information = await userBookInformation(
+      database.client,
+      "9780980200447",
+      TestDatabase.userA.id,
+    );
     expect(information.rating).toEqual(null);
   });
 
@@ -117,7 +136,11 @@ describe("user book information", () => {
         VALUES ('A', '9780980200447', 1, '2023-10-20 12:30:00'), ('B', '9780980200447', 5, '2023-10-20 12:30:00')
     `;
 
-    const information = await userBookInformation(database.client, "9780980200447", TestDatabase.userA.id);
+    const information = await userBookInformation(
+      database.client,
+      "9780980200447",
+      TestDatabase.userA.id,
+    );
     expect(information.rating).toEqual(1);
   });
 });
@@ -142,7 +165,6 @@ describe("comments", () => {
   test("no comments", async () => {
     expect(await comments(database.client, "9780980200447", 1)).toEqual([]);
   });
-
 
   test("comments are descending", async () => {
     await database.client`

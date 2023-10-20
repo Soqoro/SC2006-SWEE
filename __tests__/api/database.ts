@@ -15,7 +15,9 @@ export class TestDatabase {
     name: "B User",
   };
 
-  client: Sql = postgres("postgres://local-username:password@localhost:5432/coverquest");
+  client: Sql = postgres(
+    "postgres://local-username:password@localhost:5432/coverquest",
+  );
   private container: StartedPostgreSqlContainer | null = null;
 
   async beforeAll() {
@@ -44,7 +46,7 @@ export class TestDatabase {
     const insertions = this.client`
       INSERT INTO user_profile (id, name) VALUES ('A', 'A User');
       INSERT INTO user_profile (id, name) VALUES ('B', 'B User');
-    `
+    `;
 
     // @ts-ignore
     await insertions.simple();

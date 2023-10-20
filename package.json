@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "jest --testMatch=\"**/__tests__/**/*.[jt]s?(x)\", \"**/?(*.)+(spec|test).[jt]s?(x)\"",
     "lint": "next lint && prettier --check . && stylelint --allow-empty-input \"**/*.css\"",
     "fix": "next lint --fix && prettier --write ."
   },
