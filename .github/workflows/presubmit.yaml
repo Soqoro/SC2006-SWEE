@@ -1,10 +1,7 @@
 name: CoverQuest Presubmit
 
 on:
-  pull_request:
-    branches:
-      - main
-
+  pull_request: {}
   workflow_dispatch: {}
 
 jobs:
@@ -20,17 +17,12 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 'latest'
-      - name: Install dependencies
-        run: npm install
-      - name: Fix linting issues
-        run: npm run fix
-      - name: Lint
-        run: npm run lint
-      - name: Build with Next.js
-        run: npm run build
-
-      - name: Commit fixes
-        uses: EndBug/add-and-commit@v9
+          node-version: "latest"
+      - run: echo "${{ secrets.ENV_FILE }}" > .env
+      - run: npm install
+      - run: npm run fix
+      - run: npm run test
+      - run: npm run build
+      - uses: EndBug/add-and-commit@v9
         with:
-          add: '*'
+          add: "*"

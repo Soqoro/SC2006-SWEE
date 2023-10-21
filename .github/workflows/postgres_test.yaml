@@ -3,8 +3,8 @@ name: Test Database Migration
 on:
   push:
     paths:
-      - '.github/postgres_test.yaml'
-      - 'migrations/**'
+      - ".github/postgres_test.yaml"
+      - "migrations/**"
 
   workflow_dispatch: {}
 

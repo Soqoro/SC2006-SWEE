@@ -1,6 +1,6 @@
-'use client';
-import Link from 'next/link';
-import Image from 'next/image';
+"use client";
+import Link from "next/link";
+import Image from "next/image";
 import {
   PanelTop,
   Heart,
@@ -9,7 +9,7 @@ import {
   Users,
   Settings,
   LogIn,
-} from 'lucide-react';
+} from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -17,25 +17,25 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import Google from '../icons/google';
-import Meta from '../icons/meta';
-import Apple from '../icons/apple';
-import { Checkbox } from '@/components/ui/checkbox';
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import Google from "../icons/google";
+import Meta from "../icons/meta";
+import Apple from "../icons/apple";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const menuLinks = [
-  { href: '/', label: 'Browse' },
-  { href: '/favourites', label: 'Favourites' },
-  { href: '/recommender', label: 'Recommender' },
+  { href: "/", label: "Browse" },
+  { href: "/favourites", label: "Favourites" },
+  { href: "/recommender", label: "Recommender" },
 ];
 
 const socialLinks = [
-  { href: '/friends', label: 'Friends' },
-  { href: '/interest-groups', label: 'Interest Groups' },
+  { href: "/friends", label: "Friends" },
+  { href: "/interest-groups", label: "Interest Groups" },
 ];
 
-const generalLinks = [{ href: '/settings', label: 'Settings' }];
+const generalLinks = [{ href: "/settings", label: "Settings" }];
 
 export default function Sidebar() {
   return (
@@ -46,9 +46,9 @@ export default function Sidebar() {
       <div className='mb-6'>Menu</div>
       {menuLinks.map(({ href, label }) => (
         <Link key={href} href={href} className='flex flex-row mb-4'>
-          {href === '/' ? <PanelTop className='pr-1' /> : null}
-          {href === '/favourites' ? <Heart className='pr-1' /> : null}
-          {href === '/recommender' ? <SkipForward className='pr-1' /> : null}
+          {href === "/" ? <PanelTop className='pr-1' /> : null}
+          {href === "/favourites" ? <Heart className='pr-1' /> : null}
+          {href === "/recommender" ? <SkipForward className='pr-1' /> : null}
           {label}
         </Link>
       ))}
@@ -57,8 +57,8 @@ export default function Sidebar() {
       <div className='mb-6'>Social</div>
       {socialLinks.map(({ href, label }) => (
         <Link key={href} href={href} className='flex flex-row mb-4'>
-          {href === '/friends' ? <UserSquare className='pr-1' /> : null}
-          {href === '/interest-groups' ? <Users className='pr-1' /> : null}
+          {href === "/friends" ? <UserSquare className='pr-1' /> : null}
+          {href === "/interest-groups" ? <Users className='pr-1' /> : null}
           {label}
         </Link>
       ))}
@@ -67,7 +67,7 @@ export default function Sidebar() {
       <div className='mb-6'>General</div>
       {generalLinks.map(({ href, label }) => (
         <Link key={href} href={href} className='flex flex-row mb-4'>
-          {href === '/settings' ? <Settings className='pr-1' /> : null}
+          {href === "/settings" ? <Settings className='pr-1' /> : null}
           {label}
         </Link>
       ))}
@@ -81,7 +81,7 @@ export default function Sidebar() {
             <DialogTitle>
               <div className='text-xl font-bold'>WELCOME BACK!</div>
               <div className='text-sm font-normal'>
-                Don&apos;t have a account,{' '}
+                Don&apos;t have a account,{" "}
                 <Button
                   className='p-0 text-sm font-normal text-indigo-500'
                   variant='link'

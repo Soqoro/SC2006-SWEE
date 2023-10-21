@@ -16,10 +16,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 'latest'
-      - name: Install dependencies
-        run: npm install
-      - name: Lint
-        run: npm run lint
-      - name: Build with Next.js
-        run: npm run build
+          node-version: "latest"
+      - run: npm install
+      - run: npm run lint
+      - run: npm run test
+      - run: npm run build
