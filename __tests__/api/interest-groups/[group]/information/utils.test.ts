@@ -5,7 +5,7 @@ import {
   queryInterestGroups,
 } from "@/app/api/interest-groups/utils";
 import { v4 as uuidv4 } from "uuid";
-import { updateInterestGroupInformation } from "@/app/api/interest-groups/information/utils";
+import { updateInterestGroupInformation } from "@/app/api/interest-groups/[group]/information/utils";
 
 describe("updateInterestGroupInformation", () => {
   jest.setTimeout(60000);
@@ -36,6 +36,7 @@ describe("updateInterestGroupInformation", () => {
       await updateInterestGroupInformation(
         database.client,
         TestDatabase.userA.id,
+        group.id,
         group,
       ),
     ).toEqual(false);
@@ -72,6 +73,7 @@ describe("updateInterestGroupInformation", () => {
       await updateInterestGroupInformation(
         database.client,
         TestDatabase.userA.id,
+        mutated.id,
         mutated,
       ),
     ).toEqual(true);
@@ -115,6 +117,7 @@ describe("updateInterestGroupInformation", () => {
       await updateInterestGroupInformation(
         database.client,
         TestDatabase.userB.id,
+        mutated.id,
         mutated,
       ),
     ).toEqual(false);

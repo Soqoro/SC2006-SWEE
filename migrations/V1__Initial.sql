@@ -66,15 +66,17 @@ CREATE TABLE user_group_discussion (
     group_id uuid REFERENCES user_group(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL,
 
     name text NOT NULL,
-    creator_id text REFERENCES user_profile(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL
+    creator_id text REFERENCES user_profile(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL,
+    created_at timestamp NOT NULL
 );
 
 CREATE TABLE user_group_discussion_comment (
     id uuid PRIMARY KEY NOT NULL,
     discussion_id uuid REFERENCES user_group_discussion(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL,
 
-    name text NOT NULL,
-    creator_id text REFERENCES user_profile(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL
+    content text NOT NULL,
+    creator_id text REFERENCES user_profile(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL,
+    created_at timestamp NOT NULL
 );
 
 CREATE TABLE user_group_discussion_comment_like (

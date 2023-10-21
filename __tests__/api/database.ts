@@ -18,8 +18,8 @@ export class TestDatabase {
   client: Sql = postgres(
     "postgres://local-username:password@localhost:5432/coverquest",
     {
-      types: {
-        number: postgres.BigInt,
+      transform: {
+        column: postgres.toCamel,
       },
     },
   );
