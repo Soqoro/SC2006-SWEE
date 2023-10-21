@@ -78,7 +78,7 @@ export interface InterestGroupInformation {
 }
 
 /**
- * Creates the given interest group if it does not exists.
+ * Creates the given interest group if it does not exist.
  *
  * @param sql the database
  * @param user the user
