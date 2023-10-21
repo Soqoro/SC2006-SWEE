@@ -45,6 +45,9 @@ CREATE TABLE user_group (
 
     name text NOT NULL,
     description text NOT NULL,
+    -- Storing an entire image in a database is typically bad practice in production. However, doing so simplifies the
+    -- system architecture and removes the need for a dedicated file storage system like AWS S3 bucket/Firestore.
+    image text NOT NULL,
 
     created_at timestamp NOT NULL
 );
@@ -54,7 +57,8 @@ CREATE TABLE user_group_user_profile (
     group_id uuid REFERENCES user_group(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL,
     user_id text REFERENCES user_profile(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED NOT NULL,
 
-    permissions text[] DEFAULT '{}' NOT NULL -- This should be a separate table if it's actual production code but KISS.
+    -- It should be "banned', "member" or "moderator".
+    role text NOT NULL -- This should be an enum if it's actual production code but KISS.
 );
 
 CREATE TABLE user_group_discussion (

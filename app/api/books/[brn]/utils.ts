@@ -32,7 +32,7 @@ export interface NLBBook {
  * @param brn the book's Book Registration Number (BRN).
  * @returns the information, or null if the book could not be found.
  */
-export async function nlb(brn: string): Promise<NLBBook | null> {
+export async function queryNLB(brn: string): Promise<NLBBook | null> {
   const url = "https://openweb.nlb.gov.sg/api/v1/Catalogue/GetTitleDetails";
   const init = {
     method: "GET",
@@ -80,7 +80,7 @@ export interface OpenLibraryBook {
  * @param isbn the book's 10-digit or 13-digit ISBN.
  * @returns the information.
  */
-export async function openLibrary(isbn: string): Promise<OpenLibraryBook> {
+export async function queryOpenLibrary(isbn: string): Promise<OpenLibraryBook> {
   let description: string | null = null;
 
   const response = await fetch(
@@ -129,12 +129,12 @@ export interface UserBookInformation {
  * @param user the user's ID.
  * @returns the information.
  */
-export async function userBookInformation(
+export async function queryUserBookInformation(
   sql: Sql,
   brn: string,
   user: string,
 ): Promise<UserBookInformation> {
-  return sql.begin(async (sql) => {
+  return sql.begin(async sql => {
     const [favorite]: [{ favorite: number }?] = await sql`
       SELECT COUNT(*) AS favorite FROM user_profile WHERE id = ${user} AND ${brn} = ANY(favorite_book_brns)
     `;
@@ -177,7 +177,7 @@ export interface BookComment {
  * @param page the comments' page.
  * @return the comments.
  */
-export async function comments(
+export async function queryComments(
   sql: Sql,
   brn: string,
   page: number,

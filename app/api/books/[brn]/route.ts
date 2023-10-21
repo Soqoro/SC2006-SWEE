@@ -2,12 +2,20 @@ import { getServerSession } from "next-auth/next";
 import { sql } from "@/app/api/database";
 import { NextRequest } from "next/server";
 import {
-  comments,
-  nlb,
-  openLibrary,
-  userBookInformation,
+  queryComments,
+  queryNLB,
+  queryOpenLibrary,
+  queryUserBookInformation,
 } from "@/app/api/books/[brn]/utils";
 
+/**
+ * Returns the given book's information, comments and ratings.
+ *
+ * The URL should contain a non-negative integer `page` search parameter.
+ *
+ * @param request the request.
+ * @param params the book's BRN.
+ */
 export async function GET(
   request: NextRequest,
   {
@@ -28,20 +36,20 @@ export async function GET(
     page = 1;
   }
 
-  const nlbInformation = await nlb(params.brn);
+  const nlbInformation = await queryNLB(params.brn);
   if (!nlbInformation) {
     return Response.json({}, { status: 404 });
   }
 
   const isbn = nlbInformation.isbns.length == 0 ? "" : nlbInformation.isbns[0];
 
-  const openLibraryInformation = await openLibrary(isbn);
-  const userInformation = await userBookInformation(
+  const openLibraryInformation = await queryOpenLibrary(isbn);
+  const userInformation = await queryUserBookInformation(
     sql,
     params.brn,
     session.user.id,
   );
-  const userComments = await comments(sql, params.brn, page);
+  const userComments = await queryComments(sql, params.brn, page);
 
   return Response.json(
     {
