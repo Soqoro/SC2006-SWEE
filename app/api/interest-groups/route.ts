@@ -1,7 +1,11 @@
-import {NextRequest} from "next/server";
-import {getServerSession} from "next-auth/next";
-import {createInterestGroup, InterestGroupInformation, queryInterestGroups} from "@/app/api/interest-groups/utils";
-import {sql} from "@/app/api/database";
+import { NextRequest } from "next/server";
+import { getServerSession } from "next-auth/next";
+import {
+  createInterestGroup,
+  InterestGroupInformation,
+  queryInterestGroups,
+} from "@/app/api/interest-groups/utils";
+import { sql } from "@/app/api/database";
 
 /**
  * Returns the interest groups on the given page, in descending order of the `created_at` date.
@@ -22,10 +26,7 @@ export async function GET(request: NextRequest) {
     page = 1;
   }
 
-  return Response.json(
-    await queryInterestGroups(sql, page),
-    { status: 200 },
-  );
+  return Response.json(await queryInterestGroups(sql, page), { status: 200 });
 }
 
 /**
@@ -40,6 +41,10 @@ export async function POST(request: NextRequest) {
     return Response.json({}, { status: 401 });
   }
 
-  const success = await createInterestGroup(sql, session.user.id, (await request.json()) as InterestGroupInformation);
-  return Response.json({}, {status: success ? 200 : 400});
+  const success = await createInterestGroup(
+    sql,
+    session.user.id,
+    (await request.json()) as InterestGroupInformation,
+  );
+  return Response.json({}, { status: success ? 200 : 400 });
 }

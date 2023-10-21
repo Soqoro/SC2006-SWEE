@@ -163,7 +163,9 @@ describe("queryComments", () => {
   });
 
   test("no comments", async () => {
-    expect(await queryComments(database.client, "9780980200447", 1)).toEqual([]);
+    expect(await queryComments(database.client, "9780980200447", 1)).toEqual(
+      [],
+    );
   });
 
   test("comments are descending", async () => {
@@ -198,6 +200,8 @@ describe("queryComments", () => {
                (gen_random_uuid(), 'B', '9780980200447', 'hello', '2023-10-20 11:30:00')
     `;
 
-    expect(await queryComments(database.client, "9780980200447", 2)).toEqual([]);
+    expect(await queryComments(database.client, "9780980200447", 2)).toEqual(
+      [],
+    );
   });
 });

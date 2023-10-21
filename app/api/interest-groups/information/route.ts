@@ -1,8 +1,8 @@
-import {NextRequest} from "next/server";
-import {getServerSession} from "next-auth/next";
-import {updateInterestGroupInformation} from "@/app/api/interest-groups/information/utils";
-import {InterestGroupInformation} from "@/app/api/interest-groups/utils";
-import {sql} from "@/app/api/database";
+import { NextRequest } from "next/server";
+import { getServerSession } from "next-auth/next";
+import { updateInterestGroupInformation } from "@/app/api/interest-groups/information/utils";
+import { InterestGroupInformation } from "@/app/api/interest-groups/utils";
+import { sql } from "@/app/api/database";
 
 /**
  * Updates the given interest group if it exists and the user has the appropriate role.
@@ -16,6 +16,10 @@ export async function PUT(request: NextRequest) {
     return Response.json({}, { status: 401 });
   }
 
-  const success = await updateInterestGroupInformation(sql, session.user.id, (await request.json()) as InterestGroupInformation);
-  return Response.json({}, {status: success ? 200 : 400});
+  const success = await updateInterestGroupInformation(
+    sql,
+    session.user.id,
+    (await request.json()) as InterestGroupInformation,
+  );
+  return Response.json({}, { status: success ? 200 : 400 });
 }

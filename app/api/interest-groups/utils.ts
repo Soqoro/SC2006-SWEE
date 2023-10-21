@@ -1,4 +1,4 @@
-import {Sql} from "postgres";
+import { Sql } from "postgres";
 
 /**
  * An overview of an interest group.
@@ -7,27 +7,27 @@ export interface InterestGroupOverview {
   /**
    * The interest group's ID.
    */
-  id: string,
+  id: string;
   /**
    * The name.
    */
-  name: string,
+  name: string;
   /**
    * The description.
    */
-  description: string,
+  description: string;
   /**
    * The group's image as a base-64 string.
    *
    * {@see} https://stackoverflow.com/a/8499716/4189771 for converting a base64 string to an image.
    */
-  image: string,
+  image: string;
   /**
    * The number of members in the interest group.
    *
    * It is a string instead of a number due to https://github.com/porsager/postgres#numbers-bigint-numeric.
    */
-  members: string,
+  members: string;
 }
 
 /**
@@ -62,19 +62,19 @@ export interface InterestGroupInformation {
   /**
    * The interest group's ID.
    */
-  id: string,
+  id: string;
   /**
    * The name.
    */
-  name: string,
+  name: string;
   /**
    * The description.
    */
-  description: string,
+  description: string;
   /**
    * The group's image as a base-64 string.
    */
-  image: string,
+  image: string;
 }
 
 /**
@@ -90,8 +90,8 @@ export async function createInterestGroup(
   user: string,
   group: InterestGroupInformation,
 ): Promise<boolean> {
-  return await sql.begin(async sql => {
-    const [{count}]: [{count: number}] = await sql`
+  return await sql.begin(async (sql) => {
+    const [{ count }]: [{ count: number }] = await sql`
       SELECT COUNT(*) as count FROM user_group WHERE id = ${group.id};
     `;
 
@@ -109,6 +109,3 @@ export async function createInterestGroup(
     return count == 0;
   });
 }
-
-
-

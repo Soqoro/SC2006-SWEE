@@ -16,11 +16,12 @@ export class TestDatabase {
   };
 
   client: Sql = postgres(
-    "postgres://local-username:password@localhost:5432/coverquest", {
+    "postgres://local-username:password@localhost:5432/coverquest",
+    {
       types: {
         number: postgres.BigInt,
-      }
-    }
+      },
+    },
   );
   private container: StartedPostgreSqlContainer | null = null;
 

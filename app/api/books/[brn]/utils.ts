@@ -134,7 +134,7 @@ export async function queryUserBookInformation(
   brn: string,
   user: string,
 ): Promise<UserBookInformation> {
-  return sql.begin(async sql => {
+  return sql.begin(async (sql) => {
     const [favorite]: [{ favorite: number }?] = await sql`
       SELECT COUNT(*) AS favorite FROM user_profile WHERE id = ${user} AND ${brn} = ANY(favorite_book_brns)
     `;

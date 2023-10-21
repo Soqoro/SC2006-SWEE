@@ -1,6 +1,10 @@
-import {TestDatabase} from "@/__tests__/api/database";
-import {createInterestGroup, InterestGroupInformation, queryInterestGroups} from "@/app/api/interest-groups/utils";
-import { v4 as uuidv4 } from 'uuid';
+import { TestDatabase } from "@/__tests__/api/database";
+import {
+  createInterestGroup,
+  InterestGroupInformation,
+  queryInterestGroups,
+} from "@/app/api/interest-groups/utils";
+import { v4 as uuidv4 } from "uuid";
 
 describe("queryInterestGroups", () => {
   jest.setTimeout(60000);
@@ -95,15 +99,17 @@ describe("createInterestGroup", () => {
       image: "a image",
     };
 
-    expect(await createInterestGroup(database.client, TestDatabase.userA.id, group)).toEqual(true);
+    expect(
+      await createInterestGroup(database.client, TestDatabase.userA.id, group),
+    ).toEqual(true);
     expect(await queryInterestGroups(database.client, 1)).toEqual([
       expect.objectContaining({
         ...group,
         members: "1",
-      })
+      }),
     ]);
 
-    const [{role}]: [{role: string}] = await database.client`
+    const [{ role }]: [{ role: string }] = await database.client`
       SELECT role FROM user_group_user_profile WHERE user_id = ${TestDatabase.userA.id}
     `;
 
@@ -118,23 +124,31 @@ describe("createInterestGroup", () => {
       image: "a image",
     };
 
-    expect(await createInterestGroup(database.client, TestDatabase.userA.id, group)).toEqual(true);
-    expect(await createInterestGroup(database.client, TestDatabase.userB.id, group)).toEqual(false);
+    expect(
+      await createInterestGroup(database.client, TestDatabase.userA.id, group),
+    ).toEqual(true);
+    expect(
+      await createInterestGroup(database.client, TestDatabase.userB.id, group),
+    ).toEqual(false);
     expect(await queryInterestGroups(database.client, 1)).toEqual([
       expect.objectContaining({
         ...group,
         members: "1",
-      })
+      }),
     ]);
 
-    const [{role: roleA}]: [{role: string}] = await database.client`
+    const [{ role: roleA }]: [{ role: string }] = await database.client`
       SELECT role FROM user_group_user_profile WHERE user_id = ${TestDatabase.userA.id}
     `;
 
     expect(roleA).toBe("moderator");
 
-    expect((await database.client`
+    expect(
+      (
+        await database.client`
       SELECT role FROM user_group_user_profile WHERE user_id = ${TestDatabase.userB.id}
-    `).length).toBe(0);
+    `
+      ).length,
+    ).toBe(0);
   });
 });
