@@ -1,20 +1,20 @@
 import {
-  comments,
-  nlb,
+  queryComments,
+  queryNLB,
   NLBBook,
-  openLibrary,
+  queryOpenLibrary,
   OpenLibraryBook,
-  userBookInformation,
+  queryUserBookInformation,
 } from "@/app/api/books/[brn]/utils";
 import { TestDatabase } from "@/__tests__/api/database";
 
-describe("nlb", () => {
+describe("queryNLB", () => {
   test("BRN does not exist", async () => {
-    expect(await nlb("invalid")).toEqual(null);
+    expect(await queryNLB("invalid")).toEqual(null);
   });
 
   test("BRN exists", async () => {
-    expect(await nlb("205589543")).toEqual<NLBBook>({
+    expect(await queryNLB("205589543")).toEqual<NLBBook>({
       brn: "205589543",
       title: "Diary of a wimpy kid : big shot",
       author: "Kinney, Jeff",
@@ -36,30 +36,30 @@ describe("nlb", () => {
   });
 });
 
-describe("open library", () => {
+describe("queryOpenLibrary", () => {
   test("book does not exist", async () => {
-    expect(await openLibrary("invalid")).toEqual<OpenLibraryBook>({
+    expect(await queryOpenLibrary("invalid")).toEqual<OpenLibraryBook>({
       cover: "https://covers.openlibrary.org/b/isbn/invalid-M.jpg",
       description: null,
     });
   });
 
   test("book exists with no description", async () => {
-    expect(await openLibrary("024145414X")).toEqual<OpenLibraryBook>({
+    expect(await queryOpenLibrary("024145414X")).toEqual<OpenLibraryBook>({
       cover: "https://covers.openlibrary.org/b/isbn/024145414X-M.jpg",
       description: null,
     });
   });
 
   test("book exists with description", async () => {
-    expect(await openLibrary("9780980200447")).toEqual<OpenLibraryBook>({
+    expect(await queryOpenLibrary("9780980200447")).toEqual<OpenLibraryBook>({
       cover: "https://covers.openlibrary.org/b/isbn/9780980200447-M.jpg",
       description: null,
     });
   });
 });
 
-describe("user book information", () => {
+describe("queryUserBookInformation", () => {
   jest.setTimeout(60000);
 
   let database = new TestDatabase();
@@ -79,7 +79,7 @@ describe("user book information", () => {
   test("book not favorited", async () => {
     await database.client`UPDATE user_profile SET favorite_book_brns = '{"024145414X"}' WHERE id = 'A'`;
 
-    const information = await userBookInformation(
+    const information = await queryUserBookInformation(
       database.client,
       "9780980200447",
       TestDatabase.userA.id,
@@ -90,7 +90,7 @@ describe("user book information", () => {
   test("book favorited", async () => {
     await database.client`UPDATE user_profile SET favorite_book_brns = '{"9780980200447"}' WHERE id = 'A'`;
 
-    const information = await userBookInformation(
+    const information = await queryUserBookInformation(
       database.client,
       "9780980200447",
       TestDatabase.userA.id,
@@ -99,7 +99,7 @@ describe("user book information", () => {
   });
 
   test("has no aggregated rating", async () => {
-    const information = await userBookInformation(
+    const information = await queryUserBookInformation(
       database.client,
       "9780980200447",
       TestDatabase.userA.id,
@@ -113,7 +113,7 @@ describe("user book information", () => {
         VALUES ('A', '9780980200447', 1, '2023-10-20 12:30:00'), ('B', '9780980200447', 5, '2023-10-20 12:30:00')
     `;
 
-    const information = await userBookInformation(
+    const information = await queryUserBookInformation(
       database.client,
       "9780980200447",
       TestDatabase.userA.id,
@@ -122,7 +122,7 @@ describe("user book information", () => {
   });
 
   test("has no rating", async () => {
-    const information = await userBookInformation(
+    const information = await queryUserBookInformation(
       database.client,
       "9780980200447",
       TestDatabase.userA.id,
@@ -136,7 +136,7 @@ describe("user book information", () => {
         VALUES ('A', '9780980200447', 1, '2023-10-20 12:30:00'), ('B', '9780980200447', 5, '2023-10-20 12:30:00')
     `;
 
-    const information = await userBookInformation(
+    const information = await queryUserBookInformation(
       database.client,
       "9780980200447",
       TestDatabase.userA.id,
@@ -145,7 +145,7 @@ describe("user book information", () => {
   });
 });
 
-describe("comments", () => {
+describe("queryComments", () => {
   jest.setTimeout(60000);
 
   let database = new TestDatabase();
@@ -163,7 +163,9 @@ describe("comments", () => {
   });
 
   test("no comments", async () => {
-    expect(await comments(database.client, "9780980200447", 1)).toEqual([]);
+    expect(await queryComments(database.client, "9780980200447", 1)).toEqual(
+      [],
+    );
   });
 
   test("comments are descending", async () => {
@@ -174,7 +176,7 @@ describe("comments", () => {
                (gen_random_uuid(), 'B', '9780980200447', 'hello', '2023-10-20 11:30:00')
     `;
 
-    expect(await comments(database.client, "9780980200447", 1)).toEqual([
+    expect(await queryComments(database.client, "9780980200447", 1)).toEqual([
       expect.objectContaining({
         name: "A User",
         content: "!",
@@ -198,6 +200,8 @@ describe("comments", () => {
                (gen_random_uuid(), 'B', '9780980200447', 'hello', '2023-10-20 11:30:00')
     `;
 
-    expect(await comments(database.client, "9780980200447", 2)).toEqual([]);
+    expect(await queryComments(database.client, "9780980200447", 2)).toEqual(
+      [],
+    );
   });
 });
