@@ -1,6 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import {sql} from "@/app/api/database";
+import { sql } from "@/app/api/database";
 
 const authOptions: NextAuthOptions = {
   providers: [
@@ -12,10 +12,12 @@ const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET!,
   callbacks: {
     signIn: async ({ user }) => {
-      await sql`INSERT INTO user_profile (id, name) VALUES (${user.id}, ${user.name ?? `User@${user.id}`})`;
+      await sql`INSERT INTO user_profile (id, name) VALUES (${user.id}, ${
+        user.name ?? `User@${user.id}`
+      })`;
       return true;
     },
-    jwt: ({token, user}) => {
+    jwt: ({ token, user }) => {
       if (user?.id) {
         token.id = user.id;
       }
@@ -27,8 +29,8 @@ const authOptions: NextAuthOptions = {
         session.user.id = token.id as string;
       }
       return session;
-    }
-  }
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);

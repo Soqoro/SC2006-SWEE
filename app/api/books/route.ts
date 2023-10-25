@@ -1,6 +1,6 @@
-import {NextRequest} from "next/server";
-import {getServerSession} from "next-auth/next";
-import {queryNLB} from "@/app/api/books/utils";
+import { NextRequest } from "next/server";
+import { getServerSession } from "next-auth/next";
+import { queryNLB } from "@/app/api/books/utils";
 
 /**
  * Returns up to 20 recommended books.
@@ -22,7 +22,7 @@ export async function GET(
   const books = await queryNLB();
   return Response.json(
     {
-      books: books
+      books: books,
     },
     { status: 200 },
   );

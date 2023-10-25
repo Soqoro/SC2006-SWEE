@@ -58,7 +58,7 @@ export async function queryNLB(): Promise<Book[]> {
   }
 
   // eslint-disable-next-line
-  return (json['titles'] as any[]).map<Book>(book => {
+  return (json["titles"] as any[]).map<Book>((book) => {
     return {
       // eslint-disable-next-line
       brn: book["brn"].toString(),
@@ -66,7 +66,7 @@ export async function queryNLB(): Promise<Book[]> {
       author: book["author"],
       isbns: book["isbns"],
       subjects: book["subjects"],
-      cover: `https://covers.openlibrary.org/b/isbn/${book["isbns"][0]}-L.jpg`
-    }
+      cover: `https://covers.openlibrary.org/b/isbn/${book["isbns"][0]}-L.jpg`,
+    };
   });
 }
