@@ -41,6 +41,7 @@ const generalLinks = [{ href: "/settings", label: "Settings" }];
 /* eslint-disable */
 export default function Sidebar() {
   const { data: session } = useSession();
+
   return (
     <div className='flex flex-col border-r-2 h-screen pr-32 pl-8 pt-10'>
       <div className='text-xl font-bold'>CoverQuest.</div>

@@ -1,3 +1,4 @@
+"use client";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Select,
@@ -9,7 +10,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
-export default function recommender() {
+export default function Recommender() {
   return (
     <div className='w-full flex justify-center flex-col items-center gap-10'>
       <Card
@@ -21,7 +22,7 @@ export default function recommender() {
             <SelectTrigger className='w-[180px] rounded-xl'>
               <SelectValue placeholder='Genre' />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className='bg-slate-50'>
               <SelectItem value='mystery'>Mystery</SelectItem>
               <SelectItem value='romance'>Romance</SelectItem>
               <SelectItem value='thriller'>Thriller</SelectItem>
@@ -47,7 +48,7 @@ export default function recommender() {
         style={{ boxShadow: "0 4px 6px rgba(0, 0, 128, 0.5)" }}
       >
         <CardContent className='flex items-center justify-center h-full'>
-          <div className='rounded-xl border w-[300px] p-2'>
+          <div className='rounded-xl border w-[300px] p-2 border-black'>
             Based on your inputs, we recommend:
           </div>
         </CardContent>
