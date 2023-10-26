@@ -57,16 +57,20 @@ export async function queryNLB(): Promise<Book[]> {
     return [];
   }
 
+  console.log(json["titles"]);
+
   // eslint-disable-next-line
-  return (json["titles"] as any[]).map<Book>((book) => {
-    return {
-      // eslint-disable-next-line
-      brn: book["brn"].toString(),
-      title: book["title"],
-      author: book["author"],
-      isbns: book["isbns"],
-      subjects: book["subjects"],
-      cover: `https://covers.openlibrary.org/b/isbn/${book["isbns"][0]}-L.jpg`,
-    };
+  return (json["titles"] as any[])
+    .filter((book) => "isbns" in book)
+    .map<Book>((book) => {
+      return {
+        // eslint-disable-next-line
+        brn: book["brn"].toString(),
+        title: book["title"],
+        author: book["author"],
+        isbns: book["isbns"],
+        subjects: book["subjects"],
+        cover: `https://covers.openlibrary.org/b/isbn/${book["isbns"][0]}-L.jpg`,
+      };
   });
 }

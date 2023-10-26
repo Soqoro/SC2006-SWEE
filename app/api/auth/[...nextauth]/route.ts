@@ -12,9 +12,12 @@ const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET!,
   callbacks: {
     signIn: async ({ user }) => {
-      await sql`INSERT INTO user_profile (id, name) VALUES (${user.id}, ${
-        user.name ?? `User@${user.id}`
-      })`;
+      await sql`
+        INSERT INTO user_profile (id, name) 
+          VALUES (${user.id}, ${user.name ?? `User@${user.id}`})
+        ON CONFLICT (id) 
+          DO UPDATE SET name = ${user.name ?? `User@${user.id}`};
+      `;
       return true;
     },
     jwt: ({ token, user }) => {
