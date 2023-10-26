@@ -72,5 +72,5 @@ export async function queryNLB(): Promise<Book[]> {
         subjects: book["subjects"],
         cover: `https://covers.openlibrary.org/b/isbn/${book["isbns"][0]}-L.jpg`,
       };
-  });
+    });
 }
