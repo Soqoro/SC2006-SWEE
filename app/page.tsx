@@ -11,28 +11,125 @@ import {
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { useEffect, useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+
+type Book = {
+  brn: string;
+  title: string;
+  author: string;
+  isbns: string[];
+  cover: string;
+};
+
+const mysteryBooks = [
+  {
+    title: "Palm Beach Deadly",
+    cover: "https://m.media-amazon.com/images/I/91X8Lt3r4AL._SL1500_.jpg",
+  },
+  {
+    title: "Dead to Rights",
+    cover: "https://m.media-amazon.com/images/I/816N+EDLQgL._SL1500_.jpg",
+  },
+  {
+    title: "Echoes Fade",
+    cover: "https://m.media-amazon.com/images/I/71okBz1KJfL._SL1500_.jpg",
+  },
+  {
+    title: "Jack and Kill",
+    cover: "https://m.media-amazon.com/images/I/8134kElldTL._SL1500_.jpg",
+  },
+  {
+    title: "Prepper Jack: Hunting Lee Child's Jack Reacher",
+    cover: "https://m.media-amazon.com/images/I/91sgYo8wfKL._SL1500_.jpg",
+  },
+  {
+    title: "Remarkably Bright Creatures",
+    cover: "https://m.media-amazon.com/images/I/81X7rAcaQkL._SL1500_.jpg",
+  },
+  {
+    title: "None of This Is True",
+    cover: "https://m.media-amazon.com/images/I/81vY9hRyKgL._SL1500_.jpg",
+  },
+  {
+    title: "Judgment Prey",
+    cover: "https://m.media-amazon.com/images/I/81-t3N58oyL._SL1500_.jpg",
+  },
+  {
+    title: "The Guest List: A Reese's Book Club Pick",
+    cover: "https://m.media-amazon.com/images/I/81QEpeAxCxS._SL1500_.jpg",
+  },
+];
+
+const romanceBooks = [
+  {
+    title: "King of Greed",
+    cover: "https://m.media-amazon.com/images/I/916aHcKUtgL._SL1500_.jpg",
+  },
+  {
+    title: "Caught Up",
+    cover: "https://m.media-amazon.com/images/I/91dbecj7GdL._SL1500_.jpg",
+  },
+  {
+    title: "Hopeless",
+    cover: "https://m.media-amazon.com/images/I/91PVmik98-L._SL1500_.jpg",
+  },
+  {
+    title: "Tempted By The Devil",
+    cover: "https://m.media-amazon.com/images/I/81XSxDGr0xL._SL1500_.jpg",
+  },
+  {
+    title: "Haunting Adeline",
+    cover: "https://m.media-amazon.com/images/I/91foIfs9XeL._SL1500_.jpg",
+  },
+  {
+    title: "Between Love and Loathing",
+    cover: "https://m.media-amazon.com/images/I/913TWv0yAUL._SL1500_.jpg",
+  },
+  {
+    title: "Finally Forever",
+    cover: "https://m.media-amazon.com/images/I/61QFRaahGhL._SL1200_.jpg",
+  },
+  {
+    title: "All the Little Raindrops",
+    cover: "https://m.media-amazon.com/images/I/81sRikHUh6L._SL1500_.jpg",
+  },
+  {
+    title: "Things We Left Behind",
+    cover: "https://m.media-amazon.com/images/I/81vH6kaT1jL._SL1500_.jpg",
+  },
+];
 /* eslint-disable */
 export default function Home() {
-  const [books, setBooks] = useState();
+  const [books, setBooks] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
     fetchBooks();
-    setIsLoading(false);
   }, []);
 
   const fetchBooks = async () => {
-    const response = await fetch("/api/books", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    console.log("This is the response:", response);
-    const data = await response.json();
-    console.log("This is the data:", data);
-    //setBooks(data);
+    setIsLoading(true);
+    try {
+      const response = await fetch("/api/books", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch books");
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setBooks(data.books);
+    } catch (error) {
+      console.error(error);
+      // Optionally set an error state here to show a message to the user.
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -88,10 +185,67 @@ export default function Home() {
       <div className='text-xl mt-5 mb-5'>
         Trending
         <Separator className='border-2' />
-        {isLoading ? <div>Loading...</div> : <div>{books}</div>}
+        {isLoading ? (
+          <Skeleton className='w-1/2 rounded-full bg-gray' />
+        ) : (
+          <div className='flex flex-row flex-wrap mt-2'>
+            {books
+              .filter((book, index) => ![4, 5, 17].includes(index))
+              .map((book) => (
+                <Image
+                  key={book.brn}
+                  src={book.cover}
+                  alt={book.title}
+                  width='100'
+                  height='100'
+                  className='m-2 rounded-xl shadow-lg'
+                />
+              ))}
+          </div>
+        )}
       </div>
 
-      <div className='text-xl mt-5 mb-5'>Mystery</div>
+      <div className='text-xl mt-5 mb-5'>
+        Mystery
+        <Separator className='border-2' />
+        {isLoading ? (
+          <Skeleton className='w-1/2 rounded-full bg-black' />
+        ) : (
+          <div className='flex flex-row flex-wrap mt-2'>
+            {mysteryBooks.map((book) => (
+              <Image
+                key={book.title}
+                src={book.cover}
+                alt={book.title}
+                width='100'
+                height='100'
+                className='m-2 rounded-xl shadow-lg'
+              />
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className='text-xl mt-5 mb-5'>
+        Romance
+        <Separator className='border-2' />
+        {isLoading ? (
+          <Skeleton className='w-1/2 rounded-full bg-black' />
+        ) : (
+          <div className='flex flex-row flex-wrap mt-2'>
+            {romanceBooks.map((book) => (
+              <Image
+                key={book.title}
+                src={book.cover}
+                alt={book.title}
+                width='100'
+                height='100'
+                className='m-2 rounded-xl shadow-lg'
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

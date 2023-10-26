@@ -64,13 +64,15 @@ export async function queryNLB(): Promise<Book[]> {
     .filter((book) => "isbns" in book)
     .map<Book>((book) => {
       return {
-        // eslint-disable-next-line
+        /* eslint-disable */
         brn: book["brn"].toString(),
         title: book["title"],
         author: book["author"],
         isbns: book["isbns"],
         subjects: book["subjects"],
-        cover: `https://covers.openlibrary.org/b/isbn/${book["isbns"][0]}-L.jpg`,
+        cover: `https://covers.openlibrary.org/b/isbn/${
+          book["isbns"][0].match(/\d+/)[0]
+        }-L.jpg`,
       };
-  });
+    });
 }
