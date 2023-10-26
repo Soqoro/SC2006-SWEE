@@ -10,7 +10,31 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
-export default function home() {
+import { useEffect, useState } from "react";
+/* eslint-disable */
+export default function Home() {
+  const [books, setBooks] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchBooks();
+    setIsLoading(false);
+  }, []);
+
+  const fetchBooks = async () => {
+    const response = await fetch("/api/books", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("This is the response:", response);
+    const data = await response.json();
+    console.log("This is the data:", data);
+    //setBooks(data);
+  };
+
   return (
     <div className='w-full p-10'>
       <div className='flex flex-row items-center justify-between pl-5 pr-5'>
@@ -64,6 +88,7 @@ export default function home() {
       <div className='text-xl mt-5 mb-5'>
         Trending
         <Separator className='border-2' />
+        {isLoading ? <div>Loading...</div> : <div>{books}</div>}
       </div>
 
       <div className='text-xl mt-5 mb-5'>Mystery</div>
