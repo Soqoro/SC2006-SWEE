@@ -12,6 +12,7 @@ import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 
 type Book = {
   brn: string;
@@ -192,14 +193,16 @@ export default function Home() {
             {books
               .filter((book, index) => ![4, 5, 17].includes(index))
               .map((book) => (
-                <Image
-                  key={book.brn}
-                  src={book.cover}
-                  alt={book.title}
-                  width='100'
-                  height='100'
-                  className='m-2 rounded-xl shadow-lg'
-                />
+                <Link href={`/book/${book.brn}`} key={book.brn}>
+                  <Image
+                    key={book.brn}
+                    src={book.cover}
+                    alt={book.title}
+                    width='100'
+                    height='100'
+                    className='m-2 rounded-xl shadow-lg'
+                  />
+                </Link>
               ))}
           </div>
         )}
