@@ -6,6 +6,7 @@ import {
   DiscussionComment,
   queryComments,
 } from "@/app/api/interest-groups/[group]/discussions/[discussion]/comments/utils";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 /**
  * Returns an interest group's discussion's comments on the given page, in descending order of the `created_at` date.
@@ -26,12 +27,12 @@ export async function GET(
     };
   },
 ) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (!session) {
     return Response.json({}, { status: 401 });
   }
 
-  let page = parseInt(request.nextUrl.searchParams.get("page") ?? "") ?? 1;
+  let page = parseInt(request.nextUrl.searchParams.get("page") ?? "") || 1;
   if (page <= 0) {
     page = 1;
   }
@@ -60,7 +61,7 @@ export async function POST(
     };
   },
 ) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (!session) {
     return Response.json({}, { status: 401 });
   }
