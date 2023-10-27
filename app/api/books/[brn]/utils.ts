@@ -182,6 +182,7 @@ export async function queryComments(
   brn: string,
   page: number,
 ): Promise<BookComment[]> {
+  console.log(page);
   return sql<BookComment[]>`
     SELECT * FROM book_comment JOIN user_profile ON book_comment.user_id = user_profile.id 
       WHERE brn = ${brn} ORDER BY created_at DESC LIMIT 10 OFFSET ${

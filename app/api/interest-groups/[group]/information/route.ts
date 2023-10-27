@@ -5,6 +5,7 @@ import {
   InterestGroupInformation,
   updateInterestGroupInformation,
 } from "@/app/api/interest-groups/[group]/information/utils";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 /**
  * Updates the given interest group if it exists and the user has the appropriate role.
@@ -23,7 +24,7 @@ export async function PUT(
     };
   },
 ) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (!session) {
     return Response.json({}, { status: 401 });
   }

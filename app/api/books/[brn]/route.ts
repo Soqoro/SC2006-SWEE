@@ -7,6 +7,7 @@ import {
   queryOpenLibrary,
   queryUserBookInformation,
 } from "@/app/api/books/[brn]/utils";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 /**
  * Returns the given book's information, comments and ratings.
@@ -26,13 +27,13 @@ export async function GET(
     };
   },
 ) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (!session) {
     return Response.json({}, { status: 401 });
   }
 
-  let page = parseInt(request.nextUrl.searchParams.get("page") ?? "") ?? 1;
-  if (page <= 0) {
+  let page = parseInt(request.nextUrl.searchParams.get("page") ?? "") || 1;
+  if (page) {
     page = 1;
   }
 
@@ -44,6 +45,7 @@ export async function GET(
   const isbn = nlbInformation.isbns.length == 0 ? "" : nlbInformation.isbns[0];
 
   const openLibraryInformation = await queryOpenLibrary(isbn);
+  console.log(session.user);
   const userInformation = await queryUserBookInformation(
     sql,
     params.brn,

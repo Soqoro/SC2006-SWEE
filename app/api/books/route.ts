@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { queryNLB } from "@/app/api/books/utils";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 /**
  * Returns up to 20 recommended books.
@@ -14,7 +15,7 @@ export async function GET(
   // eslint-disable-next-line
   request: NextRequest,
 ) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (!session) {
     return Response.json({}, { status: 401 });
   }

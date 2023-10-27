@@ -2,7 +2,7 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { sql } from "@/app/api/database";
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -20,19 +20,15 @@ const authOptions: NextAuthOptions = {
       `;
       return true;
     },
-    jwt: ({ token, user }) => {
-      if (user?.id) {
-        token.id = user.id;
-      }
-
-      return token;
-    },
     session: ({ session, token }) => {
       if (session?.user) {
-        session.user.id = token.id as string;
+        session.user.id = token.sub as string;
       }
       return session;
     },
+  },
+  session: {
+    strategy: "jwt",
   },
 };
 

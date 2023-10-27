@@ -57,8 +57,6 @@ export async function queryNLB(): Promise<Book[]> {
     return [];
   }
 
-  console.log(json["titles"]);
-
   // eslint-disable-next-line
   return (json["titles"] as any[])
     .filter((book) => "isbns" in book)
