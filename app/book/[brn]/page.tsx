@@ -32,6 +32,15 @@ type bookInfo = {
 export default function Book({ params }: { params: { brn: string } }) {
   const [bookDetails, setDetails] = useState<bookInfo>({} as bookInfo);
   const [isLoading, setIsLoading] = useState(false);
+  const handleFrontNavigation = (e: any) => {
+    e.preventDefault();
+    window.history.forward();
+  };
+
+  const handleBackNavigation = (e: any) => {
+    e.preventDefault();
+    window.history.back();
+  };
 
   useEffect(() => {
     fetchInfo();
@@ -66,8 +75,12 @@ export default function Book({ params }: { params: { brn: string } }) {
     <div className='flex w-full flex-col p-10'>
       <div className='flex flex-row items-center justify-between pl-5 pr-5'>
         <div className='flex flex-row'>
-          <ChevronLeft />
-          <ChevronRight />
+          <a href='#' onClick={handleBackNavigation}>
+            <ChevronLeft />
+          </a>
+          <a href='#' onClick={handleFrontNavigation}>
+            <ChevronRight />
+          </a>
         </div>
 
         <div className='flex flex-row items-center'>
