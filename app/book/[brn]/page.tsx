@@ -101,87 +101,112 @@ export default function Book({ params }: { params: { brn: string } }) {
           <MessageSquare />
         </div>
       </div>
-      <div className='flex flex-row items-center gap-1 mt-5 pl-2'>
-        <Heart /> Favourite this book?
-      </div>
+      <div>
+        <div className='flex flex-row items-center gap-1 mt-5 pl-2'>
+          <Heart /> Favourite this book?
+        </div>
 
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <div className='flex flex-row'>
-          <Image
-            key={bookDetails?.brn}
-            src={bookDetails?.cover}
-            alt={bookDetails?.title}
-            width='300'
-            height='300'
-            className='m-2 rounded-xl shadow-lg'
-          />
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <div className='flex flex-row'>
+            <Image
+              key={bookDetails?.brn}
+              src={bookDetails?.cover}
+              alt={bookDetails?.title}
+              width='300'
+              height='300'
+              className='m-2 rounded-xl shadow-lg'
+            />
 
-          <div className='flex flex-col gap-2 '>
-            <div className='rounded-xl border-2 p-2 text-center font-bold border-black'>
-              {bookDetails?.title}
-            </div>
-            <div className='rounded-xl border-2 p-2 text-center border-black'>
-              {bookDetails?.description ||
-                `Book written by ${bookDetails?.author}`}
-            </div>
-            <div className='rounded-xl border-2 text-center p-2 border-black'>
-              Find my at NLB under <br />
-              <span className='font-bold'>
-                {bookDetails?.subjects?.[0]}
-              </span>{" "}
-              section
+            <div className='flex flex-col gap-2 '>
+              <div className='rounded-xl border-2 p-2 text-center font-bold border-black text-lg'>
+                {bookDetails?.title}
+              </div>
+              <div className='rounded-xl border-2 p-2 text-center border-black'>
+                {bookDetails?.description ||
+                  `Book written by ${bookDetails?.author}`}
+              </div>
+              <div className='rounded-xl border-2 text-center p-2 border-black'>
+                Find me at NLB under <br />
+                <span className='font-bold'>
+                  {bookDetails?.subjects?.[0]}
+                </span>{" "}
+                section
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <div className='font-bold border-b-2'>Ratings & Discussion</div>
-      <div className='flex flex-row mt-1'>
-        <YellowStar />
-        <YellowStar />
-        <YellowStar />
-        <YellowStar />
-        <Star />
-      </div>
-
-      <div className='flex flex-col border-2 rounded-xl p-2 mt-5 border-black'>
-        <div className='flex flex-row'>
-          <YellowStar />
-          <YellowStar />
-          <YellowStar />
-          <YellowStar />
-          <YellowStar />
-        </div>
-        <div className='font-bold mb-2'>Loved the book!</div>
-        <div>
-          Absolutely enchanting! This romance book swept me off my feet from the
-          very first page. The chemistry between the characters is electric, and
-          the emotional depth of their journey left me breathless. A beautifully
-          written love story that I couldn't put down. Five stars!
-          <br />
-          <br />
-          Annonymous, August 3, 2021
-        </div>
-      </div>
-      <div className='flex flex-col border-2 rounded-xl p-2 mt-5 border-black'>
-        <div className='flex flex-row'>
+        <div className='font-bold border-b-2'>Ratings & Discussion</div>
+        <div className='flex flex-row mt-1'>
           <YellowStar />
           <YellowStar />
           <YellowStar />
           <YellowStar />
           <Star />
         </div>
-        <div className='font-bold mb-2'>It was an amazing read!</div>
-        <div>
-          A captivating romance read that had me hooked! The characters were
-          well-developed, and their love story was heartwarming. While I
-          thoroughly enjoyed it, there were a few moments where the plot felt a
-          bit predictable. Nonetheless, a solid four-star romance novel!
-          <br />
-          <br />
-          John Doe, July 1, 2021
+
+        <div className='flex flex-col border-2 rounded-xl p-2 mt-5 border-black'>
+          <div className='flex flex-row'>
+            <YellowStar />
+            <YellowStar />
+            <YellowStar />
+            <YellowStar />
+            <YellowStar />
+          </div>
+          <div className='font-bold mb-2'>Loved the book!</div>
+          <div>
+            Absolutely enchanting! This romance book swept me off my feet from
+            the very first page. The chemistry between the characters is
+            electric, and the emotional depth of their journey left me
+            breathless. A beautifully written love story that I couldn't put
+            down. Five stars!
+            <br />
+            <br />
+            Annonymous, August 3, 2021
+          </div>
+        </div>
+        <div className='flex flex-col border-2 rounded-xl p-2 mt-5 border-black'>
+          <div className='flex flex-row'>
+            <YellowStar />
+            <YellowStar />
+            <YellowStar />
+            <YellowStar />
+            <Star />
+          </div>
+          <div className='font-bold mb-2'>It was an amazing read!</div>
+          <div>
+            A captivating romance read that had me hooked! The characters were
+            well-developed, and their love story was heartwarming. While I
+            thoroughly enjoyed it, there were a few moments where the plot felt
+            a bit predictable. Nonetheless, a solid four-star romance novel!
+            <br />
+            <br />
+            John Doe, July 1, 2021
+          </div>
+        </div>
+        <div className='flex items-center justify-center mt-16'>
+          <button className='px-3 py-1 border rounded-l-md border-gray-300 hover:bg-gray-200 focus:outline-none'>
+            <span className='material-icons'>
+              <ChevronLeft />
+            </span>
+          </button>
+          <button className='px-3 py-1 bg-blue-500 text-white border-t border-b border-gray-300 hover:bg-blue-600 focus:outline-none'>
+            1
+          </button>
+          <button className='px-3 py-1 border-t border-b border-gray-300 hover:bg-gray-200 focus:outline-none'>
+            2
+          </button>
+          <button className='px-3 py-1 border-t border-b border-gray-300 hover:bg-gray-200 focus:outline-none'>
+            3
+          </button>
+          <div className='px-3 py-1 border-t border-b border-gray-300'>...</div>
+          <button className='px-3 py-1 border rounded-r-md border-gray-300 hover:bg-gray-200 focus:outline-none'>
+            <span className='material-icons'>
+              <ChevronRight />
+            </span>
+          </button>
         </div>
       </div>
     </div>

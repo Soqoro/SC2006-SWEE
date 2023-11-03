@@ -225,7 +225,7 @@ export default function Home() {
         Mystery
         <Separator className='border-2' />
         {isLoading ? (
-          <Skeleton className='w-1/2 rounded-full bg-black' />
+          <Skeleton className='w-1/2 rounded-full bg-black text-black' />
         ) : (
           <div className='flex flex-row flex-wrap mt-2'>
             {mysteryBooks.map((book) => (

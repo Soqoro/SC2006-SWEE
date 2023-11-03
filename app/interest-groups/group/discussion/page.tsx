@@ -10,7 +10,6 @@ import {
   MessageSquare,
 } from "lucide-react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -209,6 +208,28 @@ export default function Discussion() {
             </div>
           </div>
         </div>
+      </div>
+      <div className='flex items-center justify-center mt-16'>
+        <button className='px-3 py-1 border rounded-l-md border-gray-300 hover:bg-gray-200 focus:outline-none'>
+          <span className='material-icons'>
+            <ChevronLeft />
+          </span>
+        </button>
+        <button className='px-3 py-1 bg-blue-500 text-white border-t border-b border-gray-300 hover:bg-blue-600 focus:outline-none'>
+          1
+        </button>
+        <button className='px-3 py-1 border-t border-b border-gray-300 hover:bg-gray-200 focus:outline-none'>
+          2
+        </button>
+        <button className='px-3 py-1 border-t border-b border-gray-300 hover:bg-gray-200 focus:outline-none'>
+          3
+        </button>
+        <div className='px-3 py-1 border-t border-b border-gray-300'>...</div>
+        <button className='px-3 py-1 border rounded-r-md border-gray-300 hover:bg-gray-200 focus:outline-none'>
+          <span className='material-icons'>
+            <ChevronRight />
+          </span>
+        </button>
       </div>
     </div>
   );
