@@ -25,6 +25,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useSession } from "next-auth/react";
 
 type bookInfo = {
   brn: string;
@@ -50,6 +52,7 @@ export default function Book({ params }: { params: { brn: string } }) {
   const [commentDescription, setCommentDescription] = useState("");
   const [hoverRating, setHoverRating] = useState(0);
   const [selectedRating, setSelectedRating] = useState(0);
+  const { data: session } = useSession();
 
   const renderStars = () => {
     const stars = [];
@@ -167,7 +170,13 @@ export default function Book({ params }: { params: { brn: string } }) {
           <ListFilter className='ml-3' />
         </div>
 
-        <div className='flex flex-row gap-4'>
+        <div className='flex flex-row gap-4 items-center'>
+          {session && (
+            <Avatar>
+              <AvatarImage src={session.user.image ?? undefined} alt='QR' />
+              <AvatarFallback>QR</AvatarFallback>
+            </Avatar>
+          )}
           <Bell />
           <MessageSquare />
         </div>

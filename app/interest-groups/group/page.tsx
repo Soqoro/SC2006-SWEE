@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -13,9 +13,35 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useSession } from "next-auth/react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
 
 /* eslint-disable */
 export default function Group() {
+  const { data: session } = useSession();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [postTitle, setPostTitle] = useState("");
+  const { toast } = useToast();
+  const handleTitleChange = (e: any) => {
+    setPostTitle(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    setIsSubmitted(true);
+    toast({
+      title: "Suceessfully added post!",
+    });
+  };
+
   const handleFrontNavigation = (e: any) => {
     e.preventDefault();
     window.history.forward();
@@ -51,15 +77,74 @@ export default function Group() {
           <ListFilter className='ml-3' />
         </div>
 
-        <div className='flex flex-row gap-4'>
+        <div className='flex flex-row gap-4 items-center'>
+          {session && (
+            <Avatar>
+              <AvatarImage src={session.user.image ?? undefined} alt='QR' />
+              <AvatarFallback>QR</AvatarFallback>
+            </Avatar>
+          )}
           <Bell />
           <MessageSquare />
         </div>
       </div>
 
-      <Button className='mt-10 bg-orange-600 rounded-xl text-white'>
-        Create Post
-      </Button>
+      <Dialog>
+        <DialogTrigger>
+          <Button
+            className='mt-10 bg-orange-600 rounded-xl text-white'
+            variant='outline'
+          >
+            Create Post
+          </Button>
+        </DialogTrigger>
+        <DialogContent className='bg-white'>
+          <DialogHeader>
+            <DialogDescription>
+              <Input
+                placeholder='Enter post title'
+                className='mt-2 rounded-xl'
+                onChange={handleTitleChange}
+              />
+              <Input type='file' className='mt-2 rounded-xl w-1/2' />
+              <DialogPrimitive.Close>
+                <Button
+                  className='mt-2 rounded-xl'
+                  variant='outline'
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </Button>
+              </DialogPrimitive.Close>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+
+      {isSubmitted && (
+        <Link
+          href={`/interest-groups/group/discussion`}
+          className='flex justify-center'
+        >
+          <div className='rounded-xl flex items-center justify-between border-2 border-black mt-10 w-3/4'>
+            <Avatar className='h-31 w-30 ml-20'>
+              <AvatarImage src={session?.user.image ?? undefined} alt='QR' />
+              <AvatarFallback>QR</AvatarFallback>
+            </Avatar>
+            <div className='flex flex-col items-center justify-start gap-5'>
+              <div className='text-2xl font-bold'>{postTitle}</div>
+              <div className='opacity-50'>Posted by Qi Rong 1 sec ago</div>
+            </div>
+            <Image
+              src='/DemoBookDavinciCode.png'
+              alt='Book'
+              width='150'
+              height='150'
+              className='mr-5'
+            />
+          </div>
+        </Link>
+      )}
 
       <Link
         href={`/interest-groups/group/discussion`}
@@ -114,24 +199,26 @@ export default function Group() {
         </div>
       </Link>
 
-      <Link
-        href={`/interest-groups/group/discussion`}
-        className='flex justify-center'
-      >
-        <div className='rounded-xl flex items-center justify-between border-2 border-black mt-10 w-3/4'>
-          <Avatar className='h-60 w-30'>
-            <AvatarImage src='/MUser4.png' />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <div className='flex flex-col items-center justify-start gap-5'>
-            <div className='text-2xl font-bold'>
-              This thriller is out of the world!
+      {!isSubmitted && (
+        <Link
+          href={`/interest-groups/group/discussion`}
+          className='flex justify-center'
+        >
+          <div className='rounded-xl flex items-center justify-between border-2 border-black mt-10 w-3/4'>
+            <Avatar className='h-60 w-30'>
+              <AvatarImage src='/MUser4.png' />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <div className='flex flex-col items-center justify-start gap-5'>
+              <div className='text-2xl font-bold'>
+                This thriller is out of the world!
+              </div>
+              <div className='opacity-50'>Posted by Susan 10 hours ago</div>
             </div>
-            <div className='opacity-50'>Posted by Susan 10 hours ago</div>
+            <Image src='/MBook4.png' alt='Book' width='200' height='150' />
           </div>
-          <Image src='/MBook4.png' alt='Book' width='200' height='150' />
-        </div>
-      </Link>
+        </Link>
+      )}
 
       <div className='flex items-center justify-center mt-16'>
         <button className='px-3 py-1 border rounded-l-md border-gray-300 hover:bg-gray-200 focus:outline-none'>

@@ -20,10 +20,12 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useSession } from "next-auth/react";
 
 /* eslint-disable */
 export default function InterestGroups() {
   const [joined, setJoined] = useState(false);
+  const { data: session } = useSession();
   const handleFrontNavigation = (e: any) => {
     e.preventDefault();
     window.history.forward();
@@ -58,7 +60,13 @@ export default function InterestGroups() {
           <ListFilter className='ml-3' />
         </div>
 
-        <div className='flex flex-row gap-4'>
+        <div className='flex flex-row gap-4 items-center'>
+          {session && (
+            <Avatar>
+              <AvatarImage src={session.user.image ?? undefined} alt='QR' />
+              <AvatarFallback>QR</AvatarFallback>
+            </Avatar>
+          )}
           <Bell />
           <MessageSquare />
         </div>

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -12,9 +12,27 @@ import {
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useSession } from "next-auth/react";
+import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
 
 /* eslint-disable */
 export default function Discussion() {
+  const { data: session } = useSession();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [postComment, setPostComment] = useState("");
+  const [likes, setLikes] = useState(19);
+  const { toast } = useToast();
+
+  const handleUpVotes = () => {
+    setLikes(likes + 1);
+  };
+  const handleDownVotes = () => {
+    setLikes(likes - 1);
+  };
+  const handleCommentChange = (e: any) => {
+    setPostComment(e.target.value);
+  };
   const handleFrontNavigation = (e: any) => {
     e.preventDefault();
     window.history.forward();
@@ -50,7 +68,13 @@ export default function Discussion() {
           <ListFilter className='ml-3' />
         </div>
 
-        <div className='flex flex-row gap-4'>
+        <div className='flex flex-row gap-4 items-center'>
+          {session && (
+            <Avatar>
+              <AvatarImage src={session.user.image ?? undefined} alt='QR' />
+              <AvatarFallback>QR</AvatarFallback>
+            </Avatar>
+          )}
           <Bell />
           <MessageSquare />
         </div>
@@ -139,10 +163,14 @@ export default function Discussion() {
               One of the best thrillers I've read in a long time.
             </p>
             <div className='flex items-center mt-3 space-x-3'>
-              <span className='text-green-500'>↑ 19</span>
-              <span className='text-red-500'>↓</span>
-              <span className='text-gray-400'>Reply</span>
-              <span className='text-gray-400'>...</span>
+              <Button className='text-green-500' onClick={handleUpVotes}>
+                ↑ {likes}
+              </Button>
+              <div className='text-red-500' onClick={handleDownVotes}>
+                ↓
+              </div>
+              <div className='text-gray-400'>Reply</div>
+              <div className='text-gray-400'>...</div>
             </div>
           </div>
         </div>

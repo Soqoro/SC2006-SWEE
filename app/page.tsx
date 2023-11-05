@@ -13,6 +13,9 @@ import { Separator } from "@/components/ui/separator";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { Avatar } from "@/components/ui/avatar";
+import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 type Book = {
   brn: string;
@@ -103,6 +106,8 @@ const romanceBooks = [
 export default function Home() {
   const [books, setBooks] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { data: session } = useSession();
+
   const handleFrontNavigation = (e: any) => {
     e.preventDefault();
     window.history.forward();
@@ -167,7 +172,13 @@ export default function Home() {
           <ListFilter className='ml-3' />
         </div>
 
-        <div className='flex flex-row gap-4'>
+        <div className='flex flex-row gap-4 items-center'>
+          {session && (
+            <Avatar>
+              <AvatarImage src={session.user.image ?? undefined} alt='QR' />
+              <AvatarFallback>QR</AvatarFallback>
+            </Avatar>
+          )}
           <Bell />
           <MessageSquare />
         </div>
