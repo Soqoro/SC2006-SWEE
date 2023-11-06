@@ -217,7 +217,11 @@ export default function Home() {
             {books
               .filter((book, index) => ![4, 5, 17].includes(index))
               .map((book) => (
-                <Link href={`/book/${book.brn}`} key={book.brn}>
+                <Link
+                  href={`/book/${book.brn}`}
+                  key={book.brn}
+                  className='flex flex-row flex-wrap mt-2 justify-center'
+                >
                   <Image
                     key={book.brn}
                     src={book.cover}
@@ -238,17 +242,20 @@ export default function Home() {
         {isLoading ? (
           <Skeleton className='w-1/2 rounded-full bg-black text-black' />
         ) : (
-          <div className='flex flex-row flex-wrap mt-2'>
+          <div className='flex flex-row flex-wrap mt-2 items-center'>
             {mysteryBooks.map((book) => (
-              <Image
-                key={book.title}
-                src={book.cover}
-                alt={book.title}
-                width='100'
-                height='100'
-                className='m-2 rounded-xl shadow-lg'
-              />
+              <Link href={`/book/14299148`} key={14299148}>
+                <Image
+                  key={book.title}
+                  src={book.cover}
+                  alt={book.title}
+                  width='100'
+                  height='100'
+                  className='m-2 rounded-xl shadow-lg'
+                />
+              </Link>
             ))}
+            <ChevronRight className='ml-5 p-0' />
           </div>
         )}
       </div>
@@ -259,17 +266,24 @@ export default function Home() {
         {isLoading ? (
           <Skeleton className='w-1/2 rounded-full bg-black' />
         ) : (
-          <div className='flex flex-row flex-wrap mt-2'>
+          <div className='flex flex-row flex-wrap items-center mt-2'>
             {romanceBooks.map((book) => (
-              <Image
-                key={book.title}
-                src={book.cover}
-                alt={book.title}
-                width='100'
-                height='100'
-                className='m-2 rounded-xl shadow-lg'
-              />
+              <Link
+                href={`/book/14299148`}
+                key={14299148}
+                className='flex flex-row flex-wrap mt-2 justify-center'
+              >
+                <Image
+                  key={book.title}
+                  src={book.cover}
+                  alt={book.title}
+                  width='100'
+                  height='100'
+                  className='m-2 rounded-xl shadow-lg'
+                />
+              </Link>
             ))}
+            <ChevronRight className='ml-5 p-0' />
           </div>
         )}
       </div>
