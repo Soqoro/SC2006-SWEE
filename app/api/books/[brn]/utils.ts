@@ -83,6 +83,7 @@ export interface OpenLibraryBook {
 export async function queryOpenLibrary(isbn: string): Promise<OpenLibraryBook> {
   let description: string | null = null;
 
+  const isbnDigits = isbn.match(/\d+/g).join("");
   const response = await fetch(
     `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=details&format=json`,
   );
@@ -94,7 +95,7 @@ export async function queryOpenLibrary(isbn: string): Promise<OpenLibraryBook> {
   }
 
   return {
-    cover: `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`,
+    cover: `https://covers.openlibrary.org/b/isbn/${isbnDigits}-M.jpg`,
     description: description,
   };
 }

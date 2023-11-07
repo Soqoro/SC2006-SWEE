@@ -12,6 +12,10 @@ import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { Avatar } from "@/components/ui/avatar";
+import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 type Book = {
   brn: string;
@@ -102,6 +106,17 @@ const romanceBooks = [
 export default function Home() {
   const [books, setBooks] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { data: session } = useSession();
+
+  const handleFrontNavigation = (e: any) => {
+    e.preventDefault();
+    window.history.forward();
+  };
+
+  const handleBackNavigation = (e: any) => {
+    e.preventDefault();
+    window.history.back();
+  };
 
   useEffect(() => {
     fetchBooks();
@@ -136,8 +151,12 @@ export default function Home() {
     <div className='w-full p-10'>
       <div className='flex flex-row items-center justify-between pl-5 pr-5'>
         <div className='flex flex-row'>
-          <ChevronLeft />
-          <ChevronRight />
+          <a href='#' onClick={handleBackNavigation}>
+            <ChevronLeft />
+          </a>
+          <a href='#' onClick={handleFrontNavigation}>
+            <ChevronRight />
+          </a>
         </div>
 
         <div className='flex flex-row items-center'>
@@ -153,7 +172,13 @@ export default function Home() {
           <ListFilter className='ml-3' />
         </div>
 
-        <div className='flex flex-row gap-4'>
+        <div className='flex flex-row gap-4 items-center'>
+          {session && (
+            <Avatar>
+              <AvatarImage src={session.user.image ?? undefined} alt='QR' />
+              <AvatarFallback>QR</AvatarFallback>
+            </Avatar>
+          )}
           <Bell />
           <MessageSquare />
         </div>
@@ -192,14 +217,20 @@ export default function Home() {
             {books
               .filter((book, index) => ![4, 5, 17].includes(index))
               .map((book) => (
-                <Image
+                <Link
+                  href={`/book/${book.brn}`}
                   key={book.brn}
-                  src={book.cover}
-                  alt={book.title}
-                  width='100'
-                  height='100'
-                  className='m-2 rounded-xl shadow-lg'
-                />
+                  className='flex flex-row flex-wrap mt-2 justify-center'
+                >
+                  <Image
+                    key={book.brn}
+                    src={book.cover}
+                    alt={book.title}
+                    width='100'
+                    height='100'
+                    className='m-2 rounded-xl shadow-lg'
+                  />
+                </Link>
               ))}
           </div>
         )}
@@ -209,19 +240,22 @@ export default function Home() {
         Mystery
         <Separator className='border-2' />
         {isLoading ? (
-          <Skeleton className='w-1/2 rounded-full bg-black' />
+          <Skeleton className='w-1/2 rounded-full bg-black text-black' />
         ) : (
-          <div className='flex flex-row flex-wrap mt-2'>
+          <div className='flex flex-row flex-wrap mt-2 items-center'>
             {mysteryBooks.map((book) => (
-              <Image
-                key={book.title}
-                src={book.cover}
-                alt={book.title}
-                width='100'
-                height='100'
-                className='m-2 rounded-xl shadow-lg'
-              />
+              <Link href={`/book/14299148`} key={14299148}>
+                <Image
+                  key={book.title}
+                  src={book.cover}
+                  alt={book.title}
+                  width='100'
+                  height='100'
+                  className='m-2 rounded-xl shadow-lg'
+                />
+              </Link>
             ))}
+            <ChevronRight className='ml-5 p-0' />
           </div>
         )}
       </div>
@@ -232,17 +266,24 @@ export default function Home() {
         {isLoading ? (
           <Skeleton className='w-1/2 rounded-full bg-black' />
         ) : (
-          <div className='flex flex-row flex-wrap mt-2'>
+          <div className='flex flex-row flex-wrap items-center mt-2'>
             {romanceBooks.map((book) => (
-              <Image
-                key={book.title}
-                src={book.cover}
-                alt={book.title}
-                width='100'
-                height='100'
-                className='m-2 rounded-xl shadow-lg'
-              />
+              <Link
+                href={`/book/14299148`}
+                key={14299148}
+                className='flex flex-row flex-wrap mt-2 justify-center'
+              >
+                <Image
+                  key={book.title}
+                  src={book.cover}
+                  alt={book.title}
+                  width='100'
+                  height='100'
+                  className='m-2 rounded-xl shadow-lg'
+                />
+              </Link>
             ))}
+            <ChevronRight className='ml-5 p-0' />
           </div>
         )}
       </div>
